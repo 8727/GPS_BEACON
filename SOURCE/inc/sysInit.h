@@ -2,7 +2,7 @@
 #define SYSINIT_H
 
 //--------------------------------------------------------------------------------------------------------------------//
-#include "stm32f10x.h"
+#include "stm32l1xx.h"
 #include "string.h"
 
 #include "FreeRTOS.h"

@@ -4,11 +4,6 @@ void Setting(void){
   
   InitCPU();
   FlashConfigRead();
-  RtcInit();
-  I2cInit();
-  Nrf24Init();
-//  CanInit();
-//  Rs485Init();
   
   #if defined DEBUG_SETTING
     printf("\n\r\t\tStart setting\n\r\n");

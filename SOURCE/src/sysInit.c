@@ -29,69 +29,69 @@ _Bool InitCPU(void){
   status = SysTick_Config(SystemCoreClock / 1000);   //1ms
   
   RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-  RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
-  RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+//  RCC->APB1ENR |= RCC_APB1ENR_BKPEN;
+//  RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 
-  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE;
-  
-  RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-  RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-  RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
-  RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
-  RCC->APB2ENR |= RCC_APB2ENR_IOPEEN;
+//  AFIO->MAPR = AFIO_MAPR_SWJ_CFG_JTAGDISABLE;
+//  
+//  RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+//  RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
+//  RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+//  RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
+//  RCC->APB2ENR |= RCC_APB2ENR_IOPEEN;
   
   return status;
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
 void FlashAllErase(void){
-  FLASH->KEYR = INT_FLASH_KEY1;
-  FLASH->KEYR = INT_FLASH_KEY2;
-  FLASH->CR |= FLASH_CR_MER;
-  FLASH->CR |= FLASH_CR_STRT;
-  FLASH->CR |= FLASH_CR_LOCK;
+//  FLASH->KEYR = INT_FLASH_KEY1;
+//  FLASH->KEYR = INT_FLASH_KEY2;
+//  FLASH->CR |= FLASH_CR_MER;
+//  FLASH->CR |= FLASH_CR_STRT;
+//  FLASH->CR |= FLASH_CR_LOCK;
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
 void FlashConfigsErase(void){
-  FLASH->KEYR = INT_FLASH_KEY1;
-  FLASH->KEYR = INT_FLASH_KEY2;
-  while(FLASH->SR & FLASH_SR_BSY);
-  if(FLASH->SR & FLASH_SR_EOP) FLASH->SR = FLASH_SR_EOP;
-  FLASH->CR |= FLASH_CR_PER;
-  FLASH->AR = CONFIG_MEMORY_START;
-  FLASH->CR |= FLASH_CR_STRT;
-  while(!(FLASH->SR & FLASH_SR_EOP));
-  FLASH->SR = FLASH_SR_EOP;
-  FLASH->CR &= ~FLASH_CR_PER;
-  FLASH->CR |= FLASH_CR_LOCK;
+//  FLASH->KEYR = INT_FLASH_KEY1;
+//  FLASH->KEYR = INT_FLASH_KEY2;
+//  while(FLASH->SR & FLASH_SR_BSY);
+//  if(FLASH->SR & FLASH_SR_EOP) FLASH->SR = FLASH_SR_EOP;
+//  FLASH->CR |= FLASH_CR_PER;
+//  FLASH->AR = CONFIG_MEMORY_START;
+//  FLASH->CR |= FLASH_CR_STRT;
+//  while(!(FLASH->SR & FLASH_SR_EOP));
+//  FLASH->SR = FLASH_SR_EOP;
+//  FLASH->CR &= ~FLASH_CR_PER;
+//  FLASH->CR |= FLASH_CR_LOCK;
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
 void FlashConfigsWrite(uint32_t* buff, uint8_t sector){
-  uint32_t adr = sector * CONFIG_MEMORY_SECTOR;
-  uint32_t data;
-  if(adr >= CONFIG_MEMORY_SIZE) adr = 0x00;
-  adr += CONFIG_MEMORY_START;
-  FLASH->KEYR = INT_FLASH_KEY1;
-  FLASH->KEYR = INT_FLASH_KEY2;
-  while(FLASH->SR & FLASH_SR_BSY);
-  if(FLASH->SR & FLASH_SR_EOP) FLASH->SR = FLASH_SR_EOP;
-  FLASH->CR |= FLASH_CR_PG;
-  for(uint16_t i = 0x00; i < CONFIG_MEMORY_BUFF; i++){
-    data = buff[i];
-    *(__IO uint16_t*)adr = (uint16_t)data;
-    while(!(FLASH->SR & FLASH_SR_EOP));
-    FLASH->SR = FLASH_SR_EOP;
-    adr += 0x02;
-    data >>= 0x10;
-    *(__IO uint16_t*)adr = (uint16_t)data;
-    while(!(FLASH->SR & FLASH_SR_EOP));
-    FLASH->SR = FLASH_SR_EOP;
-    adr += 0x02;
-  }
-  FLASH->CR &= ~(FLASH_CR_PG);
-  FLASH->CR |= FLASH_CR_LOCK;
+//  uint32_t adr = sector * CONFIG_MEMORY_SECTOR;
+//  uint32_t data;
+//  if(adr >= CONFIG_MEMORY_SIZE) adr = 0x00;
+//  adr += CONFIG_MEMORY_START;
+//  FLASH->KEYR = INT_FLASH_KEY1;
+//  FLASH->KEYR = INT_FLASH_KEY2;
+//  while(FLASH->SR & FLASH_SR_BSY);
+//  if(FLASH->SR & FLASH_SR_EOP) FLASH->SR = FLASH_SR_EOP;
+//  FLASH->CR |= FLASH_CR_PG;
+//  for(uint16_t i = 0x00; i < CONFIG_MEMORY_BUFF; i++){
+//    data = buff[i];
+//    *(__IO uint16_t*)adr = (uint16_t)data;
+//    while(!(FLASH->SR & FLASH_SR_EOP));
+//    FLASH->SR = FLASH_SR_EOP;
+//    adr += 0x02;
+//    data >>= 0x10;
+//    *(__IO uint16_t*)adr = (uint16_t)data;
+//    while(!(FLASH->SR & FLASH_SR_EOP));
+//    FLASH->SR = FLASH_SR_EOP;
+//    adr += 0x02;
+//  }
+//  FLASH->CR &= ~(FLASH_CR_PG);
+//  FLASH->CR |= FLASH_CR_LOCK;
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
@@ -135,14 +135,14 @@ _Bool FlashConfigRead(void){
   memset(conf.data32, 0xFFFFFFFF, sizeof(conf.data32));
   conf.settings.magicKEY = CONFIG_MAGIC_KEY;
   
-  RtcTypeDef dateBuild;
-  dateBuild.year  = BUILD_YEAR;
-  dateBuild.month = BUILD_MONTH;
-  dateBuild.day   = BUILD_DAY;
-  dateBuild.hour  = BUILD_TIME_H;
-  dateBuild.min   = BUILD_TIME_M;
-  dateBuild.sec   = BUILD_TIME_S;
-  conf.settings.dateBuild = RtcTimeZoneAdjustment(RtcTimeToSeconds(&dateBuild), TIME_ZONE);
+//  RtcTypeDef dateBuild;
+//  dateBuild.year  = BUILD_YEAR;
+//  dateBuild.month = BUILD_MONTH;
+//  dateBuild.day   = BUILD_DAY;
+//  dateBuild.hour  = BUILD_TIME_H;
+//  dateBuild.min   = BUILD_TIME_M;
+//  dateBuild.sec   = BUILD_TIME_S;
+//  conf.settings.dateBuild = RtcTimeZoneAdjustment(RtcTimeToSeconds(&dateBuild), TIME_ZONE);
   
   conf.settings.hwBuild = (uint32_t)HW_BUILD;
   conf.settings.swBuild = (uint32_t)SW_BUILD;
